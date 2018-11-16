@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %} - {% if delete_mode %}removal{% else %}end{% endif %} tasks {{object.name}} {% endblock %}
+
+{% block content %}
+
+    <h1>{% if delete_mode %}Removal{% else %}End{% endif %} tasks {{object.name}}</h1>
+
+	<form method="post" action="" role="form">{% csrf_token %}
+		Do you really want to {% if delete_mode %}remove{% else %}finish{% endif %} request "{{ object.name }}" ?
+
+        <div>
+            <button type="submit" class="btn btn-danger">Yes</button>
+            <a class="btn btn-default" href="{% url 'task_list' %}">No</a>
+        </div>
+	</form>
+
+{% endblock %}

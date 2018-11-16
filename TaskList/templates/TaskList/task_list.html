@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %} - To-do list{% endblock %}
+
+{% block content %}
+
+    <h1>To-do list</h1>
+
+	<table class="table table-bordered">
+		<thead>
+		<tr>
+			<td>Name</td><td>Description</td><td>Beginning</td><td>End</td><td>done</td><td>stock</td>
+		</tr>
+		</thead>
+		<tbody>
+		{% for task in object_list %}
+		<tr>
+			<td>{{task.name}}</td><td>{{task.description}}</td><td>{{task.start}}</td><td>{{task.end}}</td>
+            <td>
+				{% if task.done %}
+                Yes
+                {% else %}
+                No
+				{% endif %}
+			</td>
+			<td>
+				<a class="btn btn-default" href="{% url 'task_details' task.id %}">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    Details
+                </a>
+                {% if not task.done %}
+				<a class="btn btn-warning" href="{% url 'task_finish' task.id %}">
+                    <span class="glyphicon glyphicon-stop"></span>
+                    Exit
+                </a>
+				{% endif %}
+				<a class="btn btn-info" href="{% url 'task_edit' task.id %}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Edit
+                </a>
+				<a class="btn btn-danger" href="{% url 'task_delete' task.id %}">
+                    <span class="glyphicon glyphicon-remove"></span> Delete
+                </a>
+			</td>
+		</tr>
+        {% empty %}
+        <tr>No tasks</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-success" href="{% url 'task_new' %}"><span class="glyphicon glyphicon-plus"></span> Add</a>
+	<a class="btn btn-default" href="{% url 'task_list_done' %}">Show completed tasks</a>
+	<a class="btn btn-default" href="{% url 'task_list_todo' %}">Show tasks to do</a>
+
+{% endblock %}

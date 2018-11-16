@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+- New user account
+{% endblock %}
+
+{% block content %}
+{% if response %}
+<div class="alert alert-danger">{{response}}</div>
+{% endif %}
+
+{% load bootstrap %}
+
+<form method="post" action="">{% csrf_token %}
+    <h2 class="form-signin-heading">New User</h2>
+
+    {{form | bootstrap}}
+
+    <button type="submit" class="btn btn-primary">Create an account</button>
+</form>
+{% endblock %}

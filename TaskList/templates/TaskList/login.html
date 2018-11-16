@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+{% if response  %} 
+<div class="alert alert-danger">{{response}}</div>
+{% endif %}
+
+{% load bootstrap %}
+<form method="POST" action="/" class="form-signin">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">Welcome to tasklist</h2>
+
+    {{ form | bootstrap }}
+    
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Sign In</button>
+        <a class="btn btn-default" href="/register">Create an account</a>
+    </div>
+</form>
+{% endblock %}

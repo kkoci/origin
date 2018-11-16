@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}- {% if edit %}Addition{% else %}Edition{% endif %} Works{% endblock %}
+
+{% block content %}
+
+    <h1>{% if edit %}Addition{% else %}Edition{% endif %} Works</h1>
+    {% load bootstrap %}
+
+    <form method="post" role="form" action="">{% csrf_token %}
+        {{form | bootstrap}}
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-default" href="{% url 'task_list' %}">Return to the task list</a>
+    </form>
+
+{% endblock %}

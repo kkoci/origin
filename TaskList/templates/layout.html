@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load staticfiles %}
+
+    <title>TaskList {% block title %}{% endblock title %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <style>
+        body { padding-top: 75px; }
+    </style>
+
+    {{ form.media }}
+</head>
+<body>
+<!-- Change navbar color -->
+<style>
+.navbar-custom {
+    background-color: #ff5500;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
+}
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}</style>
+<!-- navigation panel -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {% if user.is_authenticated %}
+            <a class="navbar-brand" href="/tasks">TaskList</a>
+            {% else %}
+            <a class="navbar-brand" href="/">TaskList</a>
+            {% endif %}
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% if active == 'tasks' or active == 'home' %}active{% endif %}">
+                    {% if user.is_authenticated %}
+                    <a href="/tasks">Home</a>
+                    {% else %}
+                    <a href="/">Home</a>
+                    {% endif %}
+                </li>
+                <li class="{% if active == 'about' %}active{% endif %}">
+                    <a href="/about">TaskList</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{% if active == 'user' %}active{% endif %}"><a href="/user">User {{user}}</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-off"></span>&nbsp;Logout</a></li>
+            </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+</body>
+</html>
