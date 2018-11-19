@@ -1,91 +1,53 @@
-import datetime
-
+"""
+These are just 4 simple tests for our application
+"""
 from django.test import TestCase, SimpleTestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from TaskList.auth_forms import RegisterUserForm
-from django.http import HttpRequest
-from django.core.urlresolvers import reverse
-from . import views
+from TaskList.models import Task
 
-#from TaskList.models import Task
 class HomePageTests(SimpleTestCase):
-
+    """
+    Just 3 simple tests about http responses
+    """
     def test_home_page_status_code(self):
+        """
+        Check if the login page is working properly
+        """
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
     def test_view_url_by_name(self):
-        response = self.client.get(reverse('home'))
+        """
+        Check if the url actually exists
+        """
+        response = self.client.get(reverse('register'))
         self.assertEquals(response.status_code, 200)
 
-#class TaskModelTestCase(TestCase):
-    '''def setUp(self):
-        self.user = self.create_user()
-        #self.client.login(username='ragsagar', password='password')
-        #self.task = self.create_task()
-        #self.create_task(title="Completed Task",
-                         #status=Task.STATUS_CHOICES.complete)
-        #self.create_task(title="Task Ready for Review",
-                         #status=Task.STATUS_CHOICES.ready_for_review)
-
-    def create_task(self,
-                    name="Test task",
-                    status=1,
-                    priority=1,
-                    due_date=None):
-        if not due_date:
-            due_date = datetime.date.today() + datetime.timedelta(days=1)
-        data =  {
-                'created_by': self.user,
-                'title': title,
-                'priority': priority,
-                'module': 'CRM',
-                'due_date': due_date,
-                'type': 3,
-                'description': 'testing task',
-                'assigned_user': self.user,
-                'status': status,
-                }
-        return Task.objects.create(**data)'''
-
-    #def create_user(self, **kwargs):
-    #    user_data = {}
-    #    user_data['username'] = 'kkoci'
-    #    user_data['password'] = 'qwertyuiop'
-    #    user_data.update(kwargs)
-    #    user = User.objects.create_user(**user_data)
-    #    return user
-
-    '''def test_task_creation(self):
+    def test_view_uses_correct_template(self):
         """
-        Test the process of creation of tasks.
+        Check if the right url associated template is loading
         """
-        task = self.create_task()
-        self.assertTrue(isinstance(task, Task))
-        self.assertEqual(task.__str__(), task.title)
+        response = self.client.get(reverse('login'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'layout.html')
 
-    def tesk_task_url(self):
+class TaskTests(TestCase):
+    """
+    Our minimalistic model test :)
+    """
+    def setUp(self):
         """
-        Test if the absolute url of task is the url to detail page.
+        The setup for our model test
         """
-        task = self.create_task()
-        url = reverse('task_detail', kwargs={'pk': task.pk})
-        self.assertEqual(str(task.get_absolute_url()), url)
+        self.task = Task(name="Test1",
+                         description="Alors",
+                         start="2018-12-11 12:12",
+                         end="2018-12-12 12:45",
+                         user_id=1
+                        )
 
-    def test_task_object_methods(self):
+    def test_task_name(self):
         """
-        Test the helper methods in Task.
+        Check if the task is created properly
         """
-        today = datetime.date.today()
-        tomorrow = today + datetime.timedelta(days=1)
-        yesterday = today - datetime.timedelta(days=1)
-        completed_task = self.create_task(status=Task.STATUS_CHOICES.complete)
-        incomplete_task = self.create_task(title="New task", due_date=tomorrow)
-        self.create_task(status=Task.STATUS_CHOICES.incomplete)
-        due_task = self.create_task(title='Incomplete due task',
-                                    due_date=yesterday)
-        self.assertEqual(completed_task.is_due(), False)
-        self.assertEqual(due_task.is_due(), True)
-        self.assertEqual(incomplete_task.is_due(), False)'''
-
+        self.assertEqual(self.task.name, 'Test1')

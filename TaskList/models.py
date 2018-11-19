@@ -10,7 +10,7 @@ from TaskList import timedelta
 
 class Task(models.Model):
     """
-    A class describing the tasks to be carried out along with a description
+    A class describing the tasks to be carried out, along with a description
     """
     user = models.ForeignKey(User)
     name = models.CharField(max_length=256)
