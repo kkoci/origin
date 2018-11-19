@@ -15,6 +15,10 @@ class HomePageTests(SimpleTestCase):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
+    def test_view_url_by_name(self):
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.status_code, 200)
+
 #class TaskModelTestCase(TestCase):
     '''def setUp(self):
         self.user = self.create_user()
