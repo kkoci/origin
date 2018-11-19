@@ -31,3 +31,8 @@ Run command
 > python manage.py runserver
 
 By default you can use the app at http://localhost:8000
+
+## Tests
+There are 4 tests, 3 http simple ones, and one database TestCase
+On the root app folder just run
+> python manage.py test TaskList
