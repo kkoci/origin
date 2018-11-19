@@ -1,14 +1,21 @@
 import datetime
 
-from django.test import TestCase
+from django.test import TestCase, SimpleTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from TaskList.auth_forms import RegisterUserForm
+from django.http import HttpRequest
+from django.core.urlresolvers import reverse
+from . import views
 
 #from TaskList.models import Task
+class HomePageTests(SimpleTestCase):
 
+    def test_home_page_status_code(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
 
-class TaskModelTestCase(TestCase):
+#class TaskModelTestCase(TestCase):
     '''def setUp(self):
         self.user = self.create_user()
         #self.client.login(username='ragsagar', password='password')
@@ -38,13 +45,13 @@ class TaskModelTestCase(TestCase):
                 }
         return Task.objects.create(**data)'''
 
-    def create_user(self, **kwargs):
-        user_data = {}
-        user_data['username'] = 'kkoci'
-        user_data['password'] = 'qwertyuiop'
-        user_data.update(kwargs)
-        user = User.objects.create_user(**user_data)
-        return user
+    #def create_user(self, **kwargs):
+    #    user_data = {}
+    #    user_data['username'] = 'kkoci'
+    #    user_data['password'] = 'qwertyuiop'
+    #    user_data.update(kwargs)
+    #    user = User.objects.create_user(**user_data)
+    #    return user
 
     '''def test_task_creation(self):
         """
